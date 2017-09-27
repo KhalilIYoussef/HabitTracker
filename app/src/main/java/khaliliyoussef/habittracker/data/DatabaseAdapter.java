@@ -40,19 +40,12 @@ class DatabaseAdapter {
         return id;
     }
 
-    public String getAllData() {
+    public Cursor read() {
         SQLiteDatabase sqLiteDatabase = habitDbHelper.getWritableDatabase();
         String[] columns = {COLUMN_NAME, COLUMN_DATE, COLUMN_DURATION, COLUMN_LOCATION};
         Cursor cursor = sqLiteDatabase.query(TABLE_NAME, columns, null, null, null, null, null, null);
-        StringBuffer buffer = new StringBuffer();
-        while (cursor.moveToNext()) {
-            long cid = cursor.getLong(cursor.getColumnIndex(_ID));
-            String date = cursor.getString(cursor.getColumnIndex(COLUMN_DATE));
-            String location = cursor.getString(cursor.getColumnIndex(COLUMN_LOCATION));
-            int duration = cursor.getInt(cursor.getColumnIndex(COLUMN_DURATION));
-            buffer.append(cid + ":" + date + ":" + location + ":" + duration);
-        }
-        return buffer.toString();
+
+      return cursor;
     }
 
     public class HabitDbHelper extends SQLiteOpenHelper {
